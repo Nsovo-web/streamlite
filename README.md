@@ -1,0 +1,1 @@
+TMDB’s text search ignores the genre filter. That’s a TMDB limitation.
