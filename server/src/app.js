@@ -3,6 +3,7 @@ import cors from 'cors';
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
 import { notFound, errorHandler } from './middleware/errorHandler.js';
+import authRoutes from './routes/auth.js';
 
 export const app = express();
 
@@ -12,5 +13,6 @@ app.use(cookieParser());
 app.use(morgan('dev'));
 
 app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
+app.use('/api/auth', authRoutes);
 app.use(notFound);
 app.use(errorHandler);
