@@ -6,6 +6,8 @@ import { notFound, errorHandler } from './middleware/errorHandler.js';
 import authRoutes from './routes/auth.js';
 import profileRoutes from './routes/profiles.js';
 import movieRoutes from './routes/movies.js';
+import ratingRoutes from './routes/ratings.js';
+import progressRoutes from './routes/progress.js';
 
 export const app = express();
 
@@ -18,5 +20,7 @@ app.get('/api/health', (req, res) => res.json({ status: 'ok' }));
 app.use('/api/auth', authRoutes);
 app.use('/api/profiles', profileRoutes);
 app.use('/api/movies', movieRoutes);
+app.use('/api/ratings', ratingRoutes);
+app.use('/api/progress', progressRoutes);
 app.use(notFound);
 app.use(errorHandler);

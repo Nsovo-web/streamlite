@@ -5,6 +5,8 @@ import { requireAuth } from '../middleware/auth.js';
 import { validate } from '../middleware/validate.js';
 import { HttpError } from '../middleware/errorHandler.js';
 import { getOwnProfile } from '../utils/ownProfile.js';
+import { Rating } from '../models/Rating.js';
+import { WatchProgress } from '../models/WatchProgress.js';
 
 const MAX_PROFILES = 5;
 
@@ -31,7 +33,11 @@ router.post('/', validate(createSchema), async (req, res) => {
 
 router.delete('/:id', async (req, res) => {
   const profile = await getOwnProfile(req.user.id, req.params.id);
-  await profile.deleteOne();
+  await Promise.all([
+    Rating.deleteMany({ profileId: profile._id }),
+    WatchProgress.deleteMany({ profileId: profile._id }),
+    profile.deleteOne(),
+  ]);
   res.status(204).end();
 });
 
